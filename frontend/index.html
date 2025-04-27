@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en-US" xml:lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Manager</title>
+    <link rel="stylesheet" href="/frontend/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Add Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <header class="glass">
+            <h1><i class="fas fa-wallet"></i> Expense Manager</h1>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn" class="theme-toggle-btn">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#" id="nav-expenses" class="active"><i class="fas fa-receipt"></i> Expenses</a></li>
+                <li><a href="#" id="nav-reports"><i class="fas fa-chart-pie"></i> Reports</a></li>
+                <li><a href="#" id="nav-categories"><i class="fas fa-tags"></i> Categories</a></li>
+            </ul>
+        </nav>
+
+        <main class="glass">
+            <!-- Expenses Section -->
+            <section id="expenses-section" class="active-section">
+                <h2><i class="fas fa-plus-circle"></i> Add New Expense</h2>
+                <form id="expense-form" class="card glass">
+                    <div class="form-group floating">
+                        <select id="expense-category" required></select>
+                        <label for="expense-category">Category</label>
+                    </div>
+                    <div class="form-group floating">
+                        <input type="number" id="expense-amount" step="0.01" min="0" required placeholder=" ">
+                        <label for="expense-amount">Amount</label>
+                    </div>
+                    <div class="form-group floating">
+                        <input type="text" id="expense-date" class="datepicker-input" required placeholder=" ">
+                        <label for="expense-date">Date (MM/DD/YYYY)</label>
+                    </div>
+                    <button type="submit" id="expenseSubmitBtn" class="btn"><i class="fas fa-plus-circle"></i> Add Expense</button>
+                </form>
+
+                <h2><i class="fas fa-history"></i> Recent Expenses <button id="refresh-expenses" class="btn btn-small"><i class="fas fa-sync"></i></button></h2>
+                <div class="table-container card glass">
+                    <table id="expenses-table">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th><i class="fas fa-cog" title="Actions"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Expenses will be loaded dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports-section">
+                <h2><i class="fas fa-chart-line"></i> Expense Reports</h2>
+                <div class="report-options card glass">
+                    <div class="form-group">
+                        <label for="report-type">Report Type:</label>
+                        <select id="report-type">
+                            <option value="category">Expenses by Category</option>
+                            <option value="month-comparison">Compare with Previous Month</option>
+                            <option value="year-comparison">Compare with Previous Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="category-selection">
+                        <label for="report-category">Category:</label>
+                        <select id="report-category">
+                            <option value="all">All Categories</option>
+                            <!-- Categories will be loaded dynamically -->
+                        </select>
+                    </div>
+                    <div class="form-group date-range">
+                        <label for="report-start-date">Start Date:</label>
+                        <input type="text" id="report-start-date" class="datepicker-input" placeholder="MM/DD/YYYY">
+                    </div>
+                    <div class="form-group date-range">
+                        <label for="report-end-date">End Date:</label>
+                        <input type="text" id="report-end-date" class="datepicker-input" placeholder="MM/DD/YYYY">
+                    </div>
+                    <button id="generate-report" class="btn"><i class="fas fa-chart-line"></i> Generate Report</button>
+                </div>
+
+                <div id="report-results">
+                    <!-- Report results will be displayed here -->
+                    <div id="chart-container">
+                        <canvas id="report-chart"></canvas>
+                    </div>
+                    <div id="report-summary"></div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section id="categories-section">
+                <h2><i class="fas fa-folder-plus"></i> Manage Categories</h2>
+                <div class="category-form card glass">
+                    <div class="form-group">
+                        <label for="new-category">New Category:</label>
+                        <input type="text" id="new-category">
+                    </div>
+                    <button id="add-category" class="btn"><i class="fas fa-plus"></i> Add Category</button>
+                </div>
+
+                <h3><i class="fas fa-folder"></i> Existing Categories</h3>
+                <ul id="categories-list" class="card glass">
+                    <!-- Categories will be loaded dynamically -->
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2023 Expense Manager | with <i class="fas fa-heart"></i> by Aleksandra Cheidze</p>
+        </footer>
+    </div>
+
+    <script src="/frontend/app.js"></script>
+    <script src="/frontend/display-report.js"></script>
+    <script src="/frontend/recent-expenses.js"></script>
+    <script src="/frontend/navigation.js"></script>
+    <script src="/frontend/categories.js"></script>
+    <script src="/frontend/calendar.js"></script>
+</body>
+</html>
