@@ -330,6 +330,7 @@ public class SimpleExpenseServer {
                 path = path.substring(1);
             }
 
+            // Try to load from file system first
             File file = new File(path);
             if (file.exists() && file.isFile()) {
                 // Determine content type
@@ -346,17 +347,44 @@ public class SimpleExpenseServer {
                         os.write(buffer, 0, count);
                     }
                 }
-            } else {
-                // File not found
-                String response = "File not found: " + path;
-                exchange.sendResponseHeaders(404, response.getBytes(StandardCharsets.UTF_8).length);
-                try (OutputStream os = exchange.getResponseBody()) {
-                    os.write(response.getBytes(StandardCharsets.UTF_8));
+                return;
+            }
+
+            // If not found in file system, try to load from resources
+            InputStream resourceStream = getClass().getClassLoader().getResourceAsStream(path);
+            if (resourceStream != null) {
+                // Determine content type
+                String contentType = getContentType(path);
+                exchange.getResponseHeaders().set("Content-Type", contentType);
+
+                // Read resource into byte array to determine length
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                int nRead;
+                byte[] data = new byte[1024];
+                while ((nRead = resourceStream.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
                 }
+                buffer.flush();
+                byte[] resourceData = buffer.toByteArray();
+
+                // Send resource
+                exchange.sendResponseHeaders(200, resourceData.length);
+                try (OutputStream os = exchange.getResponseBody()) {
+                    os.write(resourceData);
+                }
+                return;
+            }
+
+            // File not found
+            String response = "File not found: " + path;
+            exchange.sendResponseHeaders(404, response.getBytes(StandardCharsets.UTF_8).length);
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(response.getBytes(StandardCharsets.UTF_8));
             }
         }
+    }
 
-        private String getContentType(String path) {
+    private static String getContentType(String path) {
             if (path.endsWith(".html")) {
                 return "text/html";
             } else if (path.endsWith(".css")) {
@@ -374,6 +402,5 @@ public class SimpleExpenseServer {
             } else {
                 return "application/octet-stream";
             }
-        }
     }
 }
