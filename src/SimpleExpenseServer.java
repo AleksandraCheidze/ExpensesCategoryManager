@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class SimpleExpenseServer {
     private static final String EXPENSES_FILE = "res/expenses.txt";
-    private static final int PORT = 8080;
+    private static final int PORT = getPort();
 
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
@@ -382,6 +382,18 @@ public class SimpleExpenseServer {
                 os.write(response.getBytes(StandardCharsets.UTF_8));
             }
         }
+    }
+
+    private static int getPort() {
+        String portEnv = System.getenv("PORT");
+        if (portEnv != null && !portEnv.isEmpty()) {
+            try {
+                return Integer.parseInt(portEnv);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid PORT environment variable: " + portEnv);
+            }
+        }
+        return 8080; // Default port
     }
 
     private static String getContentType(String path) {
