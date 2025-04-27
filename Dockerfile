@@ -1,5 +1,8 @@
 FROM openjdk:17-jdk-slim
 
+# Set Java version explicitly
+ENV JAVA_VERSION=17
+
 WORKDIR /app
 
 # Copy the JAR file
