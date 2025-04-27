@@ -24,24 +24,28 @@ The "Expense Manager" is a comprehensive budget management application with a Ja
 
 ## Project Structure
 
+The project is organized into two main directories for clean separation of concerns:
+
 ### Backend (Java)
-The backend is organized around key classes and interfaces:
+Located in the `backend` directory, the backend is organized around key classes and interfaces:
 
 - **`BudgetApp`**: The central application class responsible for user interactions, expense recording, and report generation
 - **`ExpenseCategoryManager`**: A class dedicated to managing expense categories, offering functionalities for adding and removing categories
 - **`Expense`**: A class representing individual expense records, featuring fields for `category`, `amount`, and `date`
 - **`ExpenseReportGenerator`**: A versatile class designed for generating a variety of expense reports
-- **`ExpenseAPI`**: A class that provides a REST API for the frontend to interact with the backend
+- **`SimpleExpenseServer`**: A lightweight HTTP server that serves the frontend and handles API requests
+- **`ReportsHandler`**: Handles report generation requests from the frontend
+- **`SimpleHttpServer`**: Provides HTTP server functionality
 
 The relationships between these classes are as follows:
 
 - `BudgetApp` utilizes `ExpenseCategoryManager` to manage and manipulate categories
 - `BudgetApp` leverages `ExpenseReportGenerator` for generating detailed financial reports
 - `ExpenseReportGenerator` relies on data from the `Expense` class to produce meaningful reports
-- `ExpenseAPI` uses all of the above classes to provide a REST API for the frontend
+- `SimpleExpenseServer` uses all of the above classes to provide a REST API for the frontend
 
 ### Frontend (JavaScript)
-The frontend is organized around the following files:
+Located in the `frontend` directory, the frontend is organized around the following files:
 
 - **`index.html`**: The main HTML file that defines the structure of the web application
 - **`styles.css`**: The CSS file that defines the styling of the web application, including dark mode support and responsive design
@@ -74,31 +78,28 @@ The frontend is organized around the following files:
 
 ## Running the Application
 
-### Backend (Java)
+### Quick Start
 
-To run the Java backend with the simplified server:
+The easiest way to run the application is to use the provided batch file:
 
 ```bash
+run-app.bat
+```
+
+This will compile the Java files and start the server on http://localhost:8080.
+
+### Manual Start
+
+Alternatively, you can compile and run the server manually:
+
+```bash
+javac -d build/classes/java/main backend/SimpleExpenseServer.java
 java -cp build/classes/java/main SimpleExpenseServer
 ```
 
-This will start the server on http://localhost:8080
+### Accessing the Application
 
-Alternatively, to run the full API server:
-
-```bash
-run-server.bat
-```
-
-To run the console application:
-
-```bash
-java -cp "build/classes/java/main;lib/*" Main
-```
-
-### Frontend (JavaScript)
-
-The frontend is automatically served by the Java backend when you run the API server. Simply open http://localhost:8080 in your web browser.
+Once the server is running, open http://localhost:8080 in your web browser to access the application. The frontend is automatically served by the Java backend.
 
 ## User Interface
 
