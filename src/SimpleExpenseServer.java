@@ -322,7 +322,7 @@ public class SimpleExpenseServer {
 
             // Default to index.html for root path
             if (path.equals("/")) {
-                path = "/standalone-web/index.html";
+                path = "/frontend/index.html";
             }
 
             // Remove leading slash
