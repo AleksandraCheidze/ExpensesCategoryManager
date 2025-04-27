@@ -1,0 +1,6 @@
+Food
+Clothing
+Transport
+Rent
+Other
+Cosmetic

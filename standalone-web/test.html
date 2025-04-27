@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+    <h1>Test Page</h1>
+    <p>This is a test page to check if the server is serving static files correctly.</p>
+    <script>
+        // Test API call
+        fetch('http://localhost:8080/api/expenses')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Expenses data:', data);
+                const pre = document.createElement('pre');
+                pre.textContent = JSON.stringify(data, null, 2);
+                document.body.appendChild(pre);
+            })
+            .catch(error => {
+                console.error('Error fetching expenses:', error);
+                const p = document.createElement('p');
+                p.textContent = 'Error: ' + error.message;
+                p.style.color = 'red';
+                document.body.appendChild(p);
+            });
+    </script>
+</body>
+</html>
