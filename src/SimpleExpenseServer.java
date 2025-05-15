@@ -29,7 +29,7 @@ public class SimpleExpenseServer {
         server.start();
 
         System.out.println("Server started on port " + PORT);
-        System.out.println("Open http://localhost:" + PORT + "/add-expense.html in your browser");
+        System.out.println("Open http://localhost:" + PORT + "/ in your browser");
     }
 
     static class ExpensesHandler implements HttpHandler {
@@ -323,6 +323,7 @@ public class SimpleExpenseServer {
             // Default to index.html for root path
             if (path.equals("/")) {
                 path = "/frontend/index.html";
+                System.out.println("Redirecting to index.html");
             }
 
             // Remove leading slash

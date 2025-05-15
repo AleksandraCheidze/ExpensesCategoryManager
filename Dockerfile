@@ -8,9 +8,7 @@ WORKDIR /app
 # Copy source files
 COPY src /app/src
 COPY frontend /app/frontend
-
-# Create directory for expenses data
-RUN mkdir -p /app/res
+COPY res /app/res
 
 # Compile the application
 RUN mkdir -p build/classes/java/main && \
@@ -21,7 +19,8 @@ RUN echo "Manifest-Version: 1.0\nMain-Class: SimpleExpenseServer\n" > MANIFEST.M
 
 # Create JAR file
 RUN mkdir -p build/resources && \
-    cp -r frontend build/resources/ && \
+    cp -r frontend build/resources/frontend && \
+    cp -r res build/resources/res && \
     jar -cfm ExpenseManager.jar MANIFEST.MF -C build/classes/java/main . -C build resources
 
 # Expose the port
