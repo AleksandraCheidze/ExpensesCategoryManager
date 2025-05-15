@@ -168,6 +168,7 @@ The UI automatically adapts to different screen sizes, providing an optimal user
 ## 👨‍💻 Author
 
 - **Aleksandra Cheidze**
+- **Dmitrijs Loginovs**
 
 ## 📃 License
 
